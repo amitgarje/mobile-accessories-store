@@ -97,6 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Smooth Sticky Navbar behavior
     const nav = document.querySelector('.nav-glass');
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
     if (nav) {
         window.addEventListener('scroll', () => {
             const currentScroll = window.pageYOffset;
@@ -105,6 +108,26 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 nav.classList.remove('scrolled');
             }
+        });
+    }
+
+    if (navToggle && navLinks) {
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = navToggle.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.replace('fa-bars', 'fa-xmark');
+            } else {
+                icon.classList.replace('fa-xmark', 'fa-bars');
+            }
+        });
+
+        // Close menu when clicking a link
+        navLinks.querySelectorAll('.nav-item').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                navToggle.querySelector('i').classList.replace('fa-xmark', 'fa-bars');
+            });
         });
     }
 

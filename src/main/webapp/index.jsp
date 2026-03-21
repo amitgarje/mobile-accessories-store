@@ -40,36 +40,26 @@
                     top: 20px;
                     left: 50%;
                     transform: translateX(-50%);
-                    /* ✅ true horizontal center */
-
-                    width: auto;
-                    /* ❌ remove full width */
-                    min-width: 600px;
+                    width: 90%;
                     max-width: 900px;
-
                     height: 70px;
                     padding: 0 30px;
-
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-
+                    justify-content: space-between;
                     background: rgba(255, 255, 255, 0.9);
                     backdrop-filter: blur(12px);
-
                     border-radius: 40px;
                     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-
                     z-index: 1000;
+                    transition: all 0.5s ease;
                 }
 
                 .nav-container {
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    /* ✅ center everything */
-                    gap: 40px;
-                    /* spacing between logo & links */
+                    justify-content: space-between;
+                    width: 100%;
                 }
 
                 .nav-glass.scrolled {
@@ -543,6 +533,10 @@
                     <a href="${pageContext.request.contextPath}/ProductServlet?action=index" class="nav-brand">
                         ACCESSO<span>.in</span>
                     </a>
+
+                    <button class="nav-toggle" id="navToggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
 
                     <div class="nav-links">
                         <a href="${pageContext.request.contextPath}/ProductServlet?action=list"

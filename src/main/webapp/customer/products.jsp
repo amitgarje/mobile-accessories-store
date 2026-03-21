@@ -30,14 +30,13 @@
                     top: 20px;
                     left: 50%;
                     transform: translateX(-50%);
-                    width: auto;
-                    min-width: 600px;
+                    width: 90%;
                     max-width: 900px;
                     height: 70px;
                     padding: 0 30px;
                     display: flex;
                     align-items: center;
-                    justify-content: center;
+                    justify-content: space-between;
                     background: rgba(255, 255, 255, 0.9);
                     backdrop-filter: blur(12px);
                     border-radius: 40px;
@@ -49,8 +48,8 @@
                 .nav-container {
                     display: flex;
                     align-items: center;
-                    justify-content: center;
-                    gap: 40px;
+                    justify-content: space-between;
+                    width: 100%;
                 }
 
                 .nav-glass.scrolled {
@@ -112,6 +111,10 @@
                         <a href="${pageContext.request.contextPath}/index.jsp" class="nav-brand">
                             ACCESSO<span>.in</span>
                         </a>
+
+                        <button class="nav-toggle" id="navToggle">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
 
                         <div class="nav-links">
                             <a href="${pageContext.request.contextPath}/ProductServlet?action=list"

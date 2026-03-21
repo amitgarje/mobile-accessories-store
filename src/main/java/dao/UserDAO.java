@@ -13,20 +13,23 @@ public class UserDAO {
         boolean isSuccess = false;
         String query = "INSERT INTO users (name, email, password, role, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?)";
         
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            
-            pstmt.setString(1, user.getName());
-            pstmt.setString(2, user.getEmail());
-            // In production, encrypt password here
-            pstmt.setString(3, user.getPassword());
-            pstmt.setString(4, user.getRole() != null ? user.getRole() : "customer");
-            pstmt.setDouble(5, user.getLatitude());
-            pstmt.setDouble(6, user.getLongitude());
-            
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                isSuccess = true;
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) {
+                System.err.println("Could not establish database connection for registration.");
+                return false;
+            }
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, user.getName());
+                pstmt.setString(2, user.getEmail());
+                pstmt.setString(3, user.getPassword());
+                pstmt.setString(4, user.getRole() != null ? user.getRole() : "customer");
+                pstmt.setDouble(5, user.getLatitude());
+                pstmt.setDouble(6, user.getLongitude());
+                
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    isSuccess = true;
+                }
             }
         } catch (SQLException e) {
             System.err.println("Registration failed for: " + user.getEmail() + " Role: " + user.getRole());
@@ -39,22 +42,23 @@ public class UserDAO {
         User user = null;
         String query = "SELECT * FROM users WHERE email=? AND password=?";
         
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            
-            pstmt.setString(1, email);
-            pstmt.setString(2, password);
-            
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    user = new User();
-                    user.setId(rs.getInt("id"));
-                    user.setName(rs.getString("name"));
-                    user.setEmail(rs.getString("email"));
-                    user.setPassword(rs.getString("password"));
-                    user.setRole(rs.getString("role"));
-                    user.setLatitude(rs.getDouble("latitude"));
-                    user.setLongitude(rs.getDouble("longitude"));
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return null;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, email);
+                pstmt.setString(2, password);
+                
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        user = new User();
+                        user.setId(rs.getInt("id"));
+                        user.setName(rs.getString("name"));
+                        user.setEmail(rs.getString("email"));
+                        user.setPassword(rs.getString("password"));
+                        user.setRole(rs.getString("role"));
+                        user.setLatitude(rs.getDouble("latitude"));
+                        user.setLongitude(rs.getDouble("longitude"));
+                    }
                 }
             }
         } catch (SQLException e) {

@@ -28,26 +28,59 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: auto;
-            min-width: 600px;
+            width: 90%;
             max-width: 900px;
             height: 70px;
             padding: 0 30px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(12px);
             border-radius: 40px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             z-index: 1000;
+            transition: all 0.3s ease;
         }
 
         .nav-container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 40px;
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        .product-main-grid {
+            display: grid; 
+            grid-template-columns: 1fr 1fr 280px; 
+            gap: 40px; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            border: 1px solid #d5d9d9; 
+            min-height: 500px;
+        }
+
+        @media (max-width: 992px) {
+            .product-main-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .buy-box {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-main-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            .buy-box {
+                grid-column: span 1;
+            }
+            .product-img-box {
+                position: static !important;
+            }
         }
 
         .nav-brand {
@@ -97,6 +130,10 @@
                 ACCESSO<span>.in</span>
             </a>
             
+            <button class="nav-toggle" id="navToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
             <div class="nav-links">
                 <a href="${pageContext.request.contextPath}/ProductServlet?action=list" class="nav-item">Shop</a>
                 <c:choose>
@@ -124,8 +161,8 @@
             <a href="${pageContext.request.contextPath}/ProductServlet?action=list" style="color: #007185; text-decoration:none;">${product.category}</a> › <span style="color: #c45500;">${product.name}</span>
         </nav>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr 280px; gap: 40px; background: white; padding: 30px; border-radius: 8px; border: 1px solid #d5d9d9; min-height: 500px;">
-            <div style="text-align: center; position: sticky; top: 20px;">
+        <div class="product-main-grid">
+            <div class="product-img-box" style="text-align: center; position: sticky; top: 20px;">
                 <c:choose>
                     <c:when test="${not empty product.image}">
                         <img src="${product.image}" alt="${product.name}" style="max-width: 100%; height: auto; max-height: 450px; object-fit: contain; transition: transform 0.3s ease;">
@@ -166,7 +203,7 @@
             </div>
 
             <!-- Buy Box -->
-            <div style="border: 1px solid #d5d9d9; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; height: fit-content; gap: 15px;">
+            <div class="buy-box" style="border: 1px solid #d5d9d9; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; height: fit-content; gap: 15px;">
                 <div style="font-size: 1.8rem; color: #0F1111; font-weight: 500;">₹${product.price}</div>
                 <div style="font-size: 0.95rem; color: #565959;">FREE delivery <span style="font-weight: 700; color: #111;">Tomorrow, March 21</span>. Order within <span style="color:#007100;">12 hrs 30 mins</span>.</div>
                 

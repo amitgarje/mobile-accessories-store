@@ -22,13 +22,15 @@ public class ProductDAO {
             query += " LIMIT " + limit;
         }
         
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-            
-            while (rs.next()) {
-                Product product = mapProduct(rs);
-                products.add(product);
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return products;
+            try (PreparedStatement pstmt = conn.prepareStatement(query);
+                 ResultSet rs = pstmt.executeQuery()) {
+                
+                while (rs.next()) {
+                    Product product = mapProduct(rs);
+                    products.add(product);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,14 +42,15 @@ public class ProductDAO {
         List<Product> products = new ArrayList<>();
         String query = "SELECT * FROM products WHERE category=? ORDER BY created_at DESC";
         
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            
-            pstmt.setString(1, category);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Product product = mapProduct(rs);
-                    products.add(product);
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return products;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, category);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    while (rs.next()) {
+                        Product product = mapProduct(rs);
+                        products.add(product);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -73,21 +76,22 @@ public class ProductDAO {
         Product product = null;
         String query = "SELECT * FROM products WHERE id=?";
         
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            
-            pstmt.setInt(1, id);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    product = new Product();
-                    product.setId(rs.getInt("id"));
-                    product.setName(rs.getString("name"));
-                    product.setDescription(rs.getString("description"));
-                    product.setPrice(rs.getDouble("price"));
-                    product.setCategory(rs.getString("category"));
-                    product.setImage(rs.getString("image"));
-                    product.setStock(rs.getInt("stock"));
-                    product.setCreatedAt(rs.getTimestamp("created_at"));
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return null;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setInt(1, id);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        product = new Product();
+                        product.setId(rs.getInt("id"));
+                        product.setName(rs.getString("name"));
+                        product.setDescription(rs.getString("description"));
+                        product.setPrice(rs.getDouble("price"));
+                        product.setCategory(rs.getString("category"));
+                        product.setImage(rs.getString("image"));
+                        product.setStock(rs.getInt("stock"));
+                        product.setCreatedAt(rs.getTimestamp("created_at"));
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -100,19 +104,20 @@ public class ProductDAO {
         boolean isSuccess = false;
         String query = "INSERT INTO products (name, description, price, category, image, stock) VALUES (?, ?, ?, ?, ?, ?)";
         
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            
-            pstmt.setString(1, product.getName());
-            pstmt.setString(2, product.getDescription());
-            pstmt.setDouble(3, product.getPrice());
-            pstmt.setString(4, product.getCategory());
-            pstmt.setString(5, product.getImage());
-            pstmt.setInt(6, product.getStock());
-            
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                isSuccess = true;
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return false;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, product.getName());
+                pstmt.setString(2, product.getDescription());
+                pstmt.setDouble(3, product.getPrice());
+                pstmt.setString(4, product.getCategory());
+                pstmt.setString(5, product.getImage());
+                pstmt.setInt(6, product.getStock());
+                
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    isSuccess = true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -124,20 +129,21 @@ public class ProductDAO {
         boolean isSuccess = false;
         String query = "UPDATE products SET name=?, description=?, price=?, category=?, image=?, stock=? WHERE id=?";
         
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            
-            pstmt.setString(1, product.getName());
-            pstmt.setString(2, product.getDescription());
-            pstmt.setDouble(3, product.getPrice());
-            pstmt.setString(4, product.getCategory());
-            pstmt.setString(5, product.getImage());
-            pstmt.setInt(6, product.getStock());
-            pstmt.setInt(7, product.getId());
-            
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                isSuccess = true;
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return false;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, product.getName());
+                pstmt.setString(2, product.getDescription());
+                pstmt.setDouble(3, product.getPrice());
+                pstmt.setString(4, product.getCategory());
+                pstmt.setString(5, product.getImage());
+                pstmt.setInt(6, product.getStock());
+                pstmt.setInt(7, product.getId());
+                
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    isSuccess = true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,13 +155,14 @@ public class ProductDAO {
         boolean isSuccess = false;
         String query = "DELETE FROM products WHERE id=?";
         
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            
-            pstmt.setInt(1, id);
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                isSuccess = true;
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return false;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setInt(1, id);
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    isSuccess = true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,11 +173,13 @@ public class ProductDAO {
     public List<Product> getLowStockProducts() {
         List<Product> products = new ArrayList<>();
         String query = "SELECT * FROM products WHERE stock < 10 ORDER BY stock ASC";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                products.add(mapProduct(rs));
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return products;
+            try (PreparedStatement pstmt = conn.prepareStatement(query);
+                 ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    products.add(mapProduct(rs));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

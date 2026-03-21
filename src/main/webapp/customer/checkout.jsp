@@ -25,14 +25,13 @@
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: auto;
-            min-width: 600px;
+            width: 90%;
             max-width: 900px;
             height: 70px;
             padding: 0 30px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(12px);
             border-radius: 40px;
@@ -43,8 +42,8 @@
         .nav-container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 40px;
+            justify-content: space-between;
+            width: 100%;
         }
 
         .nav-brand {
@@ -67,6 +66,30 @@
         .step-header h3 { font-size: 1.4rem; font-weight: 800; margin: 0; }
         .summary-sticky { position: sticky; top: 120px; }
         .qr-card { background: #F8F9FA; padding: 25px; border-radius: 20px; text-align: center; margin-top: 20px; border: 1px dashed #DDD; display: none; }
+        @media (max-width: 992px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+            .summary-sticky {
+                position: static;
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .checkout-step {
+                padding: 20px;
+            }
+            .step-header h3 {
+                font-size: 1.1rem;
+            }
+            .checkout-steps input, .checkout-steps select {
+                font-size: 16px !important; /* Prevent zoom on iOS */
+            }
+            .shipping-inner {
+                grid-template-columns: 1fr !important;
+            }
+        }
     </style>
 </head>
 <body style="background: var(--bg-light);">
@@ -98,7 +121,7 @@
                         <h3>Delivery Destination</h3>
                     </div>
                     <div style="padding-left: 47px;">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px;">
+                    <div class="shipping-inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 8px;">
                             <div>
                                 <label style="font-size: 0.78rem; font-weight: 700; color: #AAA; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;">Full Name</label>
                                 <input type="text" name="recipientName" value="${sessionScope.user.name}" style="width:100%; padding: 12px 14px; border: 1.5px solid #E5E7EB; border-radius: 10px; font-size: 0.9rem; font-family: inherit; outline: none; transition: border 0.2s;" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'" required>
@@ -112,7 +135,7 @@
                             <label style="font-size: 0.78rem; font-weight: 700; color: #AAA; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;">House / Flat / Building, Area, Locality</label>
                             <input type="text" name="addressLine1" placeholder="e.g. 42, Green Valley, Near Tech Park" style="width:100%; padding: 12px 14px; border: 1.5px solid #E5E7EB; border-radius: 10px; font-size: 0.9rem; font-family: inherit; outline: none; transition: border 0.2s;" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'" required>
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+                        <div class="shipping-inner" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
                             <div>
                                 <label style="font-size: 0.78rem; font-weight: 700; color: #AAA; display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;">City</label>
                                 <input type="text" name="city" placeholder="City" style="width:100%; padding: 12px 14px; border: 1.5px solid #E5E7EB; border-radius: 10px; font-size: 0.9rem; font-family: inherit; outline: none; transition: border 0.2s;" onfocus="this.style.borderColor='#3B82F6'" onblur="this.style.borderColor='#E5E7EB'" required>

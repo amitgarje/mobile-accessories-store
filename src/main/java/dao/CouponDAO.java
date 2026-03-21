@@ -12,18 +12,20 @@ public class CouponDAO {
     public Coupon getCouponByCode(String code) {
         Coupon coupon = null;
         String query = "SELECT * FROM coupons WHERE code = ? AND active = TRUE";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, code);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    coupon = new Coupon();
-                    coupon.setId(rs.getInt("id"));
-                    coupon.setCode(rs.getString("code"));
-                    coupon.setType(rs.getString("type"));
-                    coupon.setValue(rs.getDouble("value"));
-                    coupon.setMinOrder(rs.getDouble("min_order"));
-                    coupon.setActive(rs.getBoolean("active"));
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return null;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, code);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        coupon = new Coupon();
+                        coupon.setId(rs.getInt("id"));
+                        coupon.setCode(rs.getString("code"));
+                        coupon.setType(rs.getString("type"));
+                        coupon.setValue(rs.getDouble("value"));
+                        coupon.setMinOrder(rs.getDouble("min_order"));
+                        coupon.setActive(rs.getBoolean("active"));
+                    }
                 }
             }
         } catch (SQLException e) {

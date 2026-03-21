@@ -111,11 +111,13 @@ public class OrderDAO {
     public double getTotalRevenue() {
         double total = 0.0;
         String query = "SELECT SUM(total_price) as total FROM orders WHERE status != 'cancelled'";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-            if (rs.next()) {
-                total = rs.getDouble("total");
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return 0.0;
+            try (PreparedStatement pstmt = conn.prepareStatement(query);
+                 ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    total = rs.getDouble("total");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,26 +128,28 @@ public class OrderDAO {
     public List<Order> getOrdersForDelivery(String riderName) {
         String query = "SELECT o.*, u.name as customer_name, u.email as customer_email FROM orders o JOIN users u ON o.user_id = u.id WHERE o.assigned_to=? AND o.status IN ('assigned', 'out for delivery') ORDER BY o.created_at ASC";
         List<Order> orders = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, riderName);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Order order = new Order();
-                    order.setId(rs.getInt("id"));
-                    order.setUserId(rs.getInt("user_id"));
-                    order.setTotalPrice(rs.getDouble("total_price"));
-                    order.setStatus(rs.getString("status"));
-                    order.setCreatedAt(rs.getTimestamp("created_at"));
-                    order.setAssignedTo(rs.getString("assigned_to"));
-                    order.setEstimatedDelivery(rs.getString("estimated_delivery"));
-                    order.setLatitude(rs.getDouble("latitude"));
-                    order.setLongitude(rs.getDouble("longitude"));
-                    order.setCustomerName(rs.getString("customer_name"));
-                    order.setCustomerEmail(rs.getString("customer_email"));
-                    
-                    fetchOrderItems(conn, order);
-                    orders.add(order);
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return orders;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, riderName);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    while (rs.next()) {
+                        Order order = new Order();
+                        order.setId(rs.getInt("id"));
+                        order.setUserId(rs.getInt("user_id"));
+                        order.setTotalPrice(rs.getDouble("total_price"));
+                        order.setStatus(rs.getString("status"));
+                        order.setCreatedAt(rs.getTimestamp("created_at"));
+                        order.setAssignedTo(rs.getString("assigned_to"));
+                        order.setEstimatedDelivery(rs.getString("estimated_delivery"));
+                        order.setLatitude(rs.getDouble("latitude"));
+                        order.setLongitude(rs.getDouble("longitude"));
+                        order.setCustomerName(rs.getString("customer_name"));
+                        order.setCustomerEmail(rs.getString("customer_email"));
+                        
+                        fetchOrderItems(conn, order);
+                        orders.add(order);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -157,23 +161,25 @@ public class OrderDAO {
     public List<Order> getOrdersByUserId(int userId) {
         String query = "SELECT * FROM orders WHERE user_id=? ORDER BY created_at DESC";
         List<Order> orders = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, userId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    Order order = new Order();
-                    order.setId(rs.getInt("id"));
-                    order.setUserId(rs.getInt("user_id"));
-                    order.setTotalPrice(rs.getDouble("total_price"));
-                    order.setStatus(rs.getString("status"));
-                    order.setCreatedAt(rs.getTimestamp("created_at"));
-                    order.setAssignedTo(rs.getString("assigned_to"));
-                    order.setEstimatedDelivery(rs.getString("estimated_delivery"));
-                    order.setLatitude(rs.getDouble("latitude"));
-                    order.setLongitude(rs.getDouble("longitude"));
-                    try { order.setDeliveryAddress(rs.getString("delivery_address")); } catch (Exception ignore) {}
-                    orders.add(order);
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return orders;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setInt(1, userId);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    while (rs.next()) {
+                        Order order = new Order();
+                        order.setId(rs.getInt("id"));
+                        order.setUserId(rs.getInt("user_id"));
+                        order.setTotalPrice(rs.getDouble("total_price"));
+                        order.setStatus(rs.getString("status"));
+                        order.setCreatedAt(rs.getTimestamp("created_at"));
+                        order.setAssignedTo(rs.getString("assigned_to"));
+                        order.setEstimatedDelivery(rs.getString("estimated_delivery"));
+                        order.setLatitude(rs.getDouble("latitude"));
+                        order.setLongitude(rs.getDouble("longitude"));
+                        try { order.setDeliveryAddress(rs.getString("delivery_address")); } catch (Exception ignore) {}
+                        orders.add(order);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -208,28 +214,30 @@ public class OrderDAO {
 
     private List<Order> getOrders(String query) {
         List<Order> orders = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
-             
-            while (rs.next()) {
-                Order order = new Order();
-                order.setId(rs.getInt("id"));
-                order.setUserId(rs.getInt("user_id"));
-                order.setTotalPrice(rs.getDouble("total_price"));
-                order.setStatus(rs.getString("status"));
-                order.setCreatedAt(rs.getTimestamp("created_at"));
-                order.setAssignedTo(rs.getString("assigned_to"));
-                order.setEstimatedDelivery(rs.getString("estimated_delivery"));
-                order.setLatitude(rs.getDouble("latitude"));
-                order.setLongitude(rs.getDouble("longitude"));
-                order.setCustomerName(rs.getString("customer_name"));
-                order.setCustomerEmail(rs.getString("customer_email"));
-                
-                // Fetch Items for this order
-                fetchOrderItems(conn, order);
-                
-                orders.add(order);
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return orders;
+            try (PreparedStatement pstmt = conn.prepareStatement(query);
+                 ResultSet rs = pstmt.executeQuery()) {
+                 
+                while (rs.next()) {
+                    Order order = new Order();
+                    order.setId(rs.getInt("id"));
+                    order.setUserId(rs.getInt("user_id"));
+                    order.setTotalPrice(rs.getDouble("total_price"));
+                    order.setStatus(rs.getString("status"));
+                    order.setCreatedAt(rs.getTimestamp("created_at"));
+                    order.setAssignedTo(rs.getString("assigned_to"));
+                    order.setEstimatedDelivery(rs.getString("estimated_delivery"));
+                    order.setLatitude(rs.getDouble("latitude"));
+                    order.setLongitude(rs.getDouble("longitude"));
+                    order.setCustomerName(rs.getString("customer_name"));
+                    order.setCustomerEmail(rs.getString("customer_email"));
+                    
+                    // Fetch Items for this order
+                    fetchOrderItems(conn, order);
+                    
+                    orders.add(order);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -240,13 +248,15 @@ public class OrderDAO {
     public boolean updateOrderStatus(int orderId, String status) {
         boolean isSuccess = false;
         String query = "UPDATE orders SET status = ? WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, status);
-            pstmt.setInt(2, orderId);
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                isSuccess = true;
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return false;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, status);
+                pstmt.setInt(2, orderId);
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    isSuccess = true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -257,12 +267,14 @@ public class OrderDAO {
     public boolean updateOrderStatusAndAssignment(int orderId, String status, String assignedTo) {
         boolean isSuccess = false;
         String query = "UPDATE orders SET status = ?, assigned_to = ? WHERE id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, status);
-            pstmt.setString(2, assignedTo);
-            pstmt.setInt(3, orderId);
-            isSuccess = pstmt.executeUpdate() > 0;
+        try (Connection conn = DBConnection.getConnection()) {
+            if (conn == null) return false;
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, status);
+                pstmt.setString(2, assignedTo);
+                pstmt.setInt(3, orderId);
+                isSuccess = pstmt.executeUpdate() > 0;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
