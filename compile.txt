@@ -1,0 +1,1089 @@
+﻿javac : C:\Users\garje\eclipse-w
+orkspace\mobile-accessories-stor
+e\src\main\java\controller\CartS
+ervlet.java:7: error: package 
+jakarta.servlet does not exist
+At C:\Users\garje\eclipse-worksp
+ace\mobile-accessories-store\com
+pile.ps1:2 char:1
++ javac -cp $classpath C:\Users\
+garje\eclipse-workspace\mobile-a
+ccessor ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo          : N 
+   otSpecified: (C:\Users\garj  
+  e\... does not exist:String   
+ ) [], RemoteException
+    + FullyQualifiedErrorId : N 
+   ativeCommandError
+ 
+import jakarta.servlet.ServletEx
+ception;
+                      ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:8: error: package 
+jakarta.servlet.annotation does 
+not exist
+import jakarta.servlet.annotatio
+n.WebServlet;
+                                
+ ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:9: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+Servlet;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:10: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+ServletRequest;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:11: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+ServletResponse;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:13: error: package model 
+does not exist
+import model.User;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:17: error: cannot find 
+symbol
+public class CartServlet 
+extends HttpServlet {
+                                
+ ^
+  symbol: class HttpServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:16: error: cannot find 
+symbol
+@WebServlet("/CartServlet")
+ ^
+  symbol: class WebServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\CartDAO.java:12: 
+error: package model does not 
+exist
+import model.Product;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\CartDAO.java:13: 
+error: package utils does not 
+exist
+import utils.DBConnection;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:25: error: cannot find 
+symbol
+    protected void 
+doGet(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                         ^
+  symbol:   class 
+HttpServletRequest
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:25: error: cannot find 
+symbol
+    protected void 
+doGet(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                     ^
+  symbol:   class 
+HttpServletResponse
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:26: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:46: error: cannot find 
+symbol
+    protected void 
+doPost(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                          ^
+  symbol:   class 
+HttpServletRequest
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:46: error: cannot find 
+symbol
+    protected void 
+doPost(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                      ^
+  symbol:   class 
+HttpServletResponse
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:47: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:51: error: cannot find 
+symbol
+    private void 
+addToCart(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                           ^
+  symbol:   class 
+HttpServletRequest
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:51: error: cannot find 
+symbol
+    private void 
+addToCart(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                       ^
+  symbol:   class 
+HttpServletResponse
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:52: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:65: error: cannot find 
+symbol
+    private void removeFromCart(
+HttpServletRequest request, 
+HttpServletResponse response)
+                                
+^
+  symbol:   class 
+HttpServletRequest
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:65: error: cannot find 
+symbol
+    private void removeFromCart(
+HttpServletRequest request, 
+HttpServletResponse response)
+                                
+                            ^
+  symbol:   class 
+HttpServletResponse
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:66: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:79: error: cannot find 
+symbol
+    private void 
+viewCart(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                          ^
+  symbol:   class 
+HttpServletRequest
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:79: error: cannot find 
+symbol
+    private void 
+viewCart(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                      ^
+  symbol:   class 
+HttpServletResponse
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\CartServlet.j
+ava:80: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class CartServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:4: error: package 
+jakarta.servlet does not exist
+import jakarta.servlet.ServletEx
+ception;
+                      ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:5: error: package 
+jakarta.servlet.annotation does 
+not exist
+import jakarta.servlet.annotatio
+n.WebServlet;
+                                
+ ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:6: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+Servlet;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:7: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+ServletRequest;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:8: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+ServletResponse;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:9: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+Session;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:11: error: package model 
+does not exist
+import model.User;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:14: error: cannot find 
+symbol
+public class LoginServlet 
+extends HttpServlet {
+                                
+  ^
+  symbol: class HttpServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:13: error: cannot find 
+symbol
+@WebServlet("/LoginServlet")
+ ^
+  symbol: class WebServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\UserDAO.java:7: 
+error: package model does not 
+exist
+import model.User;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\UserDAO.java:8: 
+error: package utils does not 
+exist
+import utils.DBConnection;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:22: error: cannot find 
+symbol
+    protected void 
+doPost(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                          ^
+  symbol:   class 
+HttpServletRequest
+  location: class LoginServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:22: error: cannot find 
+symbol
+    protected void 
+doPost(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                      ^
+  symbol:   class 
+HttpServletResponse
+  location: class LoginServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\LoginServlet.
+java:23: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class LoginServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\UserDAO.java:12: 
+error: cannot find symbol
+    public boolean 
+registerUser(User user) {
+                                
+^
+  symbol:   class User
+  location: class UserDAO
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\UserDAO.java:35: 
+error: cannot find symbol
+    public User 
+loginUser(String email, String 
+password) {
+           ^
+  symbol:   class User
+  location: class UserDAO
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:8: error: package 
+jakarta.servlet does not exist
+import jakarta.servlet.ServletEx
+ception;
+                      ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:9: error: package 
+jakarta.servlet.annotation does 
+not exist
+import jakarta.servlet.annotatio
+n.WebServlet;
+                                
+ ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:10: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+Servlet;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:11: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+ServletRequest;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:12: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+ServletResponse;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:16: error: package model 
+does not exist
+import model.Order;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:17: error: package model 
+does not exist
+import model.User;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:20: error: cannot find 
+symbol
+public class OrderServlet 
+extends HttpServlet {
+                                
+  ^
+  symbol: class HttpServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:19: error: cannot find 
+symbol
+@WebServlet("/OrderServlet")
+ ^
+  symbol: class WebServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\OrderDAO.java:10: 
+error: package model does not 
+exist
+import model.Order;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\OrderDAO.java:11: 
+error: package utils does not 
+exist
+import utils.DBConnection;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:28: error: cannot find 
+symbol
+    protected void 
+doGet(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                         ^
+  symbol:   class 
+HttpServletRequest
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:28: error: cannot find 
+symbol
+    protected void 
+doGet(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                     ^
+  symbol:   class 
+HttpServletResponse
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:29: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:51: error: cannot find 
+symbol
+    protected void 
+doPost(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                          ^
+  symbol:   class 
+HttpServletRequest
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:51: error: cannot find 
+symbol
+    protected void 
+doPost(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                      ^
+  symbol:   class 
+HttpServletResponse
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:52: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:63: error: cannot find 
+symbol
+    private void 
+placeOrder(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                            ^
+  symbol:   class 
+HttpServletRequest
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:63: error: cannot find 
+symbol
+    private void 
+placeOrder(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                        ^
+  symbol:   class 
+HttpServletResponse
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:64: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:89: error: cannot find 
+symbol
+    private void adminListOrders
+(HttpServletRequest request, 
+HttpServletResponse response)
+                                
+ ^
+  symbol:   class 
+HttpServletRequest
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:89: error: cannot find 
+symbol
+    private void adminListOrders
+(HttpServletRequest request, 
+HttpServletResponse response)
+                                
+                             ^
+  symbol:   class 
+HttpServletResponse
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:90: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:96: error: cannot find 
+symbol
+    private void deliveryListOrd
+ers(HttpServletRequest request, 
+HttpServletResponse response)
+                                
+    ^
+  symbol:   class 
+HttpServletRequest
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:96: error: cannot find 
+symbol
+    private void deliveryListOrd
+ers(HttpServletRequest request, 
+HttpServletResponse response)
+                                
+                                
+^
+  symbol:   class 
+HttpServletResponse
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:97: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:103: error: cannot find 
+symbol
+    private void 
+myOrders(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                          ^
+  symbol:   class 
+HttpServletRequest
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:103: error: cannot find 
+symbol
+    private void 
+myOrders(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                      ^
+  symbol:   class 
+HttpServletResponse
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:104: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:115: error: cannot find 
+symbol
+    private void 
+updateStatus(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                              ^
+  symbol:   class 
+HttpServletRequest
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\OrderServlet.
+java:115: error: cannot find 
+symbol
+    private void 
+updateStatus(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                          ^
+  symbol:   class 
+HttpServletResponse
+  location: class OrderServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\OrderDAO.java:108: 
+error: cannot find symbol
+    public List<Order> 
+getOrdersForAdmin() {
+                ^
+  symbol:   class Order
+  location: class OrderDAO
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\OrderDAO.java:112: 
+error: cannot find symbol
+    public List<Order> 
+getOrdersForDelivery() {
+                ^
+  symbol:   class Order
+  location: class OrderDAO
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\OrderDAO.java:116: 
+error: cannot find symbol
+    public List<Order> 
+getOrdersByUserId(int userId) {
+                ^
+  symbol:   class Order
+  location: class OrderDAO
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\OrderDAO.java:141: 
+error: cannot find symbol
+    private List<Order> 
+getOrders(String query) {
+                 ^
+  symbol:   class Order
+  location: class OrderDAO
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:7: error: package 
+jakarta.servlet does not exist
+import jakarta.servlet.ServletEx
+ception;
+                      ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:8: error: package 
+jakarta.servlet.annotation does 
+not exist
+import jakarta.servlet.annotatio
+n.WebServlet;
+                                
+ ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:9: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+Servlet;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:10: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+ServletRequest;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:11: error: package 
+jakarta.servlet.http does not 
+exist
+import jakarta.servlet.http.Http
+ServletResponse;
+                           ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:16: error: package model 
+does not exist
+import model.Product;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:19: error: cannot find 
+symbol
+public class ProductServlet 
+extends HttpServlet {
+                                
+    ^
+  symbol: class HttpServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:18: error: cannot find 
+symbol
+@WebServlet("/ProductServlet")
+ ^
+  symbol: class WebServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\ProductDAO.java:9: 
+error: package model does not 
+exist
+import model.Product;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\dao\ProductDAO.java:10: 
+error: package utils does not 
+exist
+import utils.DBConnection;
+            ^
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:27: error: cannot find 
+symbol
+    protected void 
+doGet(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                         ^
+  symbol:   class 
+HttpServletRequest
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:27: error: cannot find 
+symbol
+    protected void 
+doGet(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                     ^
+  symbol:   class 
+HttpServletResponse
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:28: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:47: error: cannot find 
+symbol
+    private void 
+listProducts(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                              ^
+  symbol:   class 
+HttpServletRequest
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:47: error: cannot find 
+symbol
+    private void 
+listProducts(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                          ^
+  symbol:   class 
+HttpServletResponse
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:48: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:55: error: cannot find 
+symbol
+    private void apiListProducts
+(HttpServletRequest request, 
+HttpServletResponse response)
+                                
+ ^
+  symbol:   class 
+HttpServletRequest
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:55: error: cannot find 
+symbol
+    private void apiListProducts
+(HttpServletRequest request, 
+HttpServletResponse response)
+                                
+                             ^
+  symbol:   class 
+HttpServletResponse
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:56: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:65: error: cannot find 
+symbol
+    private void 
+viewProduct(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                             ^
+  symbol:   class 
+HttpServletRequest
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:65: error: cannot find 
+symbol
+    private void 
+viewProduct(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                         ^
+  symbol:   class 
+HttpServletResponse
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:66: error: cannot find 
+symbol
+            throws 
+ServletException, IOException {
+                   ^
+  symbol:   class 
+ServletException
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:73: error: cannot find 
+symbol
+    protected void 
+doPost(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                          ^
+  symbol:   class 
+HttpServletRequest
+  location: class ProductServlet
+C:\Users\garje\eclipse-workspace
+\mobile-accessories-store\src\ma
+in\java\controller\ProductServle
+t.java:73: error: cannot find 
+symbol
+    protected void 
+doPost(HttpServletRequest 
+request, HttpServletResponse 
+response)
+                                
+                      ^
+  symbol:   class 
+HttpServletResponse
+  location: class ProductServlet
+100 errors
+only showing the first 100 
+errors, of 168 total; use 
+-Xmaxerrs if you would like to 
+see more
+

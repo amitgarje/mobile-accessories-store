@@ -1,0 +1,2 @@
+$classpath = "C:\Users\garje\eclipse-workspace\mobile-accessories-store\src\main\webapp\WEB-INF\lib\*;C:\Program Files\Apache Software Foundation\Tomcat 10.1\lib\*"
+javac -cp $classpath C:\Users\garje\eclipse-workspace\mobile-accessories-store\src\main\java\controller\*.java C:\Users\garje\eclipse-workspace\mobile-accessories-store\src\main\java\dao\*.java 2>&1 | Out-String | Set-Content compile.txt -Encoding utf8
