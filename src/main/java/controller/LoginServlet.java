@@ -54,7 +54,12 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/customer/products.jsp");
             }
         } else {
-            response.sendRedirect(request.getContextPath() + "/login.jsp?error=Invalid credentials");
+            // Check if connection was the problem
+            if (utils.DBConnection.getConnection() == null) {
+                response.sendRedirect(request.getContextPath() + "/login.jsp?error=Database Connection Failed. Please check Railway logs or environment variables.");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/login.jsp?error=Invalid credentials. No user found with this email/password.");
+            }
         }
     }
 }

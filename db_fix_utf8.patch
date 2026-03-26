@@ -1,0 +1,127 @@
+﻿diff --git a/src/main/java/utils/DBConnection.java b/src/main/java/utils/DBConnection.java
+index bc125b5..34feb8e 100644
+--- a/src/main/java/utils/DBConnection.java
++++ b/src/main/java/utils/DBConnection.java
+@@ -12,39 +12,56 @@ public class DBConnection {
+         try {
+             Class.forName("com.mysql.cj.jdbc.Driver");
+ 
+-            // Look for environment variables (Production/Railway)
+-            String rawUrl = System.getenv("DB_URL");
+-            if (rawUrl == null) {
+-                rawUrl = System.getenv("MYSQL_URL"); // Try Railway's default name
+-            }
+-            
++            String url = null;
+             String user = System.getenv("DB_USER");
+-            if (user == null) {
+-                user = System.getenv("MYSQLUSER"); // Try Railway's default name
+-            }
+-            
++            if (user == null) user = System.getenv("MYSQLUSER");
++
+             String pass = System.getenv("DB_PASS");
+-            if (pass == null) {
+-                pass = System.getenv("MYSQLPASSWORD"); // Try Railway's default name
+-            }
++            if (pass == null) pass = System.getenv("MYSQLPASSWORD");
+ 
+-            String url;
+-            if (rawUrl != null) {
+-                // Production: Convert Railway URL ΓåÆ JDBC format if needed
+-                if (rawUrl.startsWith("mysql://")) {
+-                    url = rawUrl.replace("mysql://", "jdbc:mysql://");
+-                } else {
+-                    url = rawUrl;
+-                }
+-                // Add useful parameters
+-                if (!url.contains("?")) {
+-                    url += "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
++            String dbUrlEnv = System.getenv("DB_URL");
++            String mysqlUrlEnv = System.getenv("MYSQL_URL");
++
++            // 1. Explicit DB_URL
++            if (dbUrlEnv != null && dbUrlEnv.startsWith("jdbc:mysql://")) {
++                url = dbUrlEnv;
++            }
++            // 2. Parse Railway's mysql:// format
++            else if (mysqlUrlEnv != null && mysqlUrlEnv.startsWith("mysql://")) {
++                try {
++                    java.net.URI dbUri = new java.net.URI(mysqlUrlEnv);
++                    String host = dbUri.getHost();
++                    int port = dbUri.getPort();
++                    String path = dbUri.getPath(); // Includes leading slash e.g. /railway
++                    
++                    url = "jdbc:mysql://" + host + ":" + (port != -1 ? port : 3306) + path;
++                    
++                    if (dbUri.getUserInfo() != null) {
++                        String[] userInfo = dbUri.getUserInfo().split(":");
++                        if (userInfo.length > 0 && user == null) user = userInfo[0];
++                        if (userInfo.length > 1 && pass == null) pass = userInfo[1];
++                    }
++                } catch (Exception e) {
++                    System.err.println("Failed to parse MYSQL_URL: " + e.getMessage());
+                 }
+-            } else {
+-                // Local Fallback (Eclipse)
+-                url = "jdbc:mysql://localhost:3306/mobile_store?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+-                user = (user != null) ? user : "root";
+-                pass = (pass != null) ? pass : "root";
++            }
++            // 3. Fallback to Railway component variables
++            else if (System.getenv("MYSQLHOST") != null) {
++                String host = System.getenv("MYSQLHOST");
++                String port = System.getenv("MYSQLPORT") != null ? System.getenv("MYSQLPORT") : "3306";
++                String db = System.getenv("MYSQLDATABASE") != null ? System.getenv("MYSQLDATABASE") : "railway";
++                url = "jdbc:mysql://" + host + ":" + port + "/" + db;
++            }
++            // 4. Local environment fallback
++            else {
++                url = "jdbc:mysql://localhost:3306/mobile_store";
++                if (user == null) user = "root";
++                if (pass == null) pass = "root";
++            }
++
++            // Append standard JDBC properties
++            if (url != null && !url.contains("?")) {
++                url += "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+             }
+ 
+             connection = DriverManager.getConnection(url, user, pass);
+diff --git a/src/main/java/utils/SecurityFilter.java b/src/main/java/utils/SecurityFilter.java
+index 209b6d5..d25fbbb 100644
+--- a/src/main/java/utils/SecurityFilter.java
++++ b/src/main/java/utils/SecurityFilter.java
+@@ -34,7 +34,7 @@ public class SecurityFilter implements Filter {
+             String role = user.getRole();
+             if (path.contains("/admin/") && "admin".equals(role)) {
+                 authorized = true;
+-            } else if (path.contains("/delivery/") && "delivery".equals(role)) {
++            } else if (path.contains("/delivery/") && ("delivery".equals(role) || "delivery_boy".equals(role))) {
+                 authorized = true;
+             }
+         }
+diff --git a/target/classes/dao/CartDAO.class b/target/classes/dao/CartDAO.class
+index 6c90db5..22b9eca 100644
+Binary files a/target/classes/dao/CartDAO.class and b/target/classes/dao/CartDAO.class differ
+diff --git a/target/classes/dao/CouponDAO.class b/target/classes/dao/CouponDAO.class
+index 637ea09..7698986 100644
+Binary files a/target/classes/dao/CouponDAO.class and b/target/classes/dao/CouponDAO.class differ
+diff --git a/target/classes/dao/OrderDAO.class b/target/classes/dao/OrderDAO.class
+index 3ece008..a1f1482 100644
+Binary files a/target/classes/dao/OrderDAO.class and b/target/classes/dao/OrderDAO.class differ
+diff --git a/target/classes/dao/ProductDAO.class b/target/classes/dao/ProductDAO.class
+index 145b2ba..1188681 100644
+Binary files a/target/classes/dao/ProductDAO.class and b/target/classes/dao/ProductDAO.class differ
+diff --git a/target/classes/dao/ReviewDAO.class b/target/classes/dao/ReviewDAO.class
+index de93204..a64b331 100644
+Binary files a/target/classes/dao/ReviewDAO.class and b/target/classes/dao/ReviewDAO.class differ
+diff --git a/target/classes/dao/UserDAO.class b/target/classes/dao/UserDAO.class
+index 8784b62..68a6a5d 100644
+Binary files a/target/classes/dao/UserDAO.class and b/target/classes/dao/UserDAO.class differ
+diff --git a/target/classes/utils/DBConnection.class b/target/classes/utils/DBConnection.class
+index b4b7206..90e408c 100644
+Binary files a/target/classes/utils/DBConnection.class and b/target/classes/utils/DBConnection.class differ
+diff --git a/target/classes/utils/SecurityFilter.class b/target/classes/utils/SecurityFilter.class
+index 05a8f0b..d1ebdb7 100644
+Binary files a/target/classes/utils/SecurityFilter.class and b/target/classes/utils/SecurityFilter.class differ
