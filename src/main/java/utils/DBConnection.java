@@ -12,39 +12,56 @@ public class DBConnection {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Look for environment variables (Production/Railway)
-            String rawUrl = System.getenv("DB_URL");
-            if (rawUrl == null) {
-                rawUrl = System.getenv("MYSQL_URL"); // Try Railway's default name
-            }
-            
+            String url = null;
             String user = System.getenv("DB_USER");
-            if (user == null) {
-                user = System.getenv("MYSQLUSER"); // Try Railway's default name
-            }
-            
+            if (user == null) user = System.getenv("MYSQLUSER");
+
             String pass = System.getenv("DB_PASS");
-            if (pass == null) {
-                pass = System.getenv("MYSQLPASSWORD"); // Try Railway's default name
+            if (pass == null) pass = System.getenv("MYSQLPASSWORD");
+
+            String dbUrlEnv = System.getenv("DB_URL");
+            String mysqlUrlEnv = System.getenv("MYSQL_URL");
+
+            // 1. Explicit DB_URL
+            if (dbUrlEnv != null && dbUrlEnv.startsWith("jdbc:mysql://")) {
+                url = dbUrlEnv;
+            }
+            // 2. Parse Railway's mysql:// format
+            else if (mysqlUrlEnv != null && mysqlUrlEnv.startsWith("mysql://")) {
+                try {
+                    java.net.URI dbUri = new java.net.URI(mysqlUrlEnv);
+                    String host = dbUri.getHost();
+                    int port = dbUri.getPort();
+                    String path = dbUri.getPath(); // Includes leading slash e.g. /railway
+                    
+                    url = "jdbc:mysql://" + host + ":" + (port != -1 ? port : 3306) + path;
+                    
+                    if (dbUri.getUserInfo() != null) {
+                        String[] userInfo = dbUri.getUserInfo().split(":");
+                        if (userInfo.length > 0 && user == null) user = userInfo[0];
+                        if (userInfo.length > 1 && pass == null) pass = userInfo[1];
+                    }
+                } catch (Exception e) {
+                    System.err.println("Failed to parse MYSQL_URL: " + e.getMessage());
+                }
+            }
+            // 3. Fallback to Railway component variables
+            else if (System.getenv("MYSQLHOST") != null) {
+                String host = System.getenv("MYSQLHOST");
+                String port = System.getenv("MYSQLPORT") != null ? System.getenv("MYSQLPORT") : "3306";
+                String db = System.getenv("MYSQLDATABASE") != null ? System.getenv("MYSQLDATABASE") : "railway";
+                url = "jdbc:mysql://" + host + ":" + port + "/" + db;
+            }
+            // 4. Local environment fallback
+            else {
+                url = "jdbc:mysql://localhost:3306/mobile_store";
+                if (user == null) user = "root";
+                if (pass == null) pass = "root";
             }
 
-            String url;
-            if (rawUrl != null) {
-                // Production: Convert Railway URL → JDBC format if needed
-                if (rawUrl.startsWith("mysql://")) {
-                    url = rawUrl.replace("mysql://", "jdbc:mysql://");
-                } else {
-                    url = rawUrl;
-                }
-                // Add useful parameters
-                if (!url.contains("?")) {
-                    url += "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-                }
-            } else {
-                // Local Fallback (Eclipse)
-                url = "jdbc:mysql://localhost:3306/mobile_store?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-                user = (user != null) ? user : "root";
-                pass = (pass != null) ? pass : "root";
+            // Append standard JDBC properties
+            if (url != null && !url.contains("?")) {
+                url += "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
             }
 
             connection = DriverManager.getConnection(url, user, pass);

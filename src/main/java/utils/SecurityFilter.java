@@ -34,7 +34,7 @@ public class SecurityFilter implements Filter {
             String role = user.getRole();
             if (path.contains("/admin/") && "admin".equals(role)) {
                 authorized = true;
-            } else if (path.contains("/delivery/") && "delivery".equals(role)) {
+            } else if (path.contains("/delivery/") && ("delivery".equals(role) || "delivery_boy".equals(role))) {
                 authorized = true;
             }
         }
