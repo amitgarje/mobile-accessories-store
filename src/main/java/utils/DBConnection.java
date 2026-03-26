@@ -28,11 +28,12 @@ public class DBConnection {
             }
 
             String url = "jdbc:mysql://" + host + ":" + port + "/" + db + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-            connection = DriverManager.getConnection(url, user, pass);
+            Connection con = DriverManager.getConnection(url, user, pass);
             
             // Auto-initialize tables if connection successful
-            if (connection != null) {
-                initializeTables(connection);
+            if (con != null) {
+                initializeTables(con);
+                return con;
             }
 
         } catch (Exception e) {
