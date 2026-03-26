@@ -20,27 +20,34 @@ public class DBConnection {
             if (pass == null) pass = System.getenv("MYSQLPASSWORD");
 
             String dbUrlEnv = System.getenv("DB_URL");
+            if (dbUrlEnv == null) dbUrlEnv = System.getenv("DATABASE_URL");
             String mysqlUrlEnv = System.getenv("MYSQL_URL");
 
-            // 1. Explicit DB_URL
+            // 1. Explicit DB_URL or DATABASE_URL that is already JDBC format
             if (dbUrlEnv != null && dbUrlEnv.startsWith("jdbc:mysql://")) {
                 url = dbUrlEnv;
             }
-            // 2. Parse Railway's mysql:// format
+            // 2. Parse Railway's mysql:// format (Works with special chars in password)
             else if (mysqlUrlEnv != null && mysqlUrlEnv.startsWith("mysql://")) {
                 try {
-                    java.net.URI dbUri = new java.net.URI(mysqlUrlEnv);
-                    String host = dbUri.getHost();
-                    int port = dbUri.getPort();
-                    String path = dbUri.getPath(); // Includes leading slash e.g. /railway
+                    String cleanUrl = mysqlUrlEnv.substring(8); // remove "mysql://"
+                    int atIndex = cleanUrl.lastIndexOf('@');
+                    String hostPortDb = cleanUrl;
                     
-                    url = "jdbc:mysql://" + host + ":" + (port != -1 ? port : 3306) + path;
-                    
-                    if (dbUri.getUserInfo() != null) {
-                        String[] userInfo = dbUri.getUserInfo().split(":");
-                        if (userInfo.length > 0 && user == null) user = userInfo[0];
-                        if (userInfo.length > 1 && pass == null) pass = userInfo[1];
+                    if (atIndex != -1) {
+                        String credentials = cleanUrl.substring(0, atIndex);
+                        int colonIndex = credentials.indexOf(':');
+                        if (colonIndex != -1) {
+                            if (user == null) user = credentials.substring(0, colonIndex);
+                            if (pass == null) pass = credentials.substring(colonIndex + 1);
+                        } else {
+                            if (user == null) user = credentials;
+                            if (pass == null) pass = "";
+                        }
+                        hostPortDb = cleanUrl.substring(atIndex + 1);
                     }
+                    
+                    url = "jdbc:mysql://" + hostPortDb;
                 } catch (Exception e) {
                     System.err.println("Failed to parse MYSQL_URL: " + e.getMessage());
                 }

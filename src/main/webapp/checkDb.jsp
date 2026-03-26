@@ -2,9 +2,9 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="utils.DBConnection" %>
 <%
-    Connection conn = DBConnection.getConnection();
-    if (conn != null) {
-        try {
+    try {
+        Connection conn = DBConnection.getConnection();
+        if (conn != null) {
             DatabaseMetaData dbmd = conn.getMetaData();
             ResultSet rs = dbmd.getTables(null, null, "%", new String[] {"TABLE"});
             out.println("<h3>Tables:</h3><ul>");
@@ -12,12 +12,15 @@
                 out.println("<li>" + rs.getString("TABLE_NAME") + "</li>");
             }
             out.println("</ul>");
-        } catch (Exception e) {
-            out.println("Error: " + e.getMessage());
-        } finally {
             conn.close();
+        } else {
+            out.println("Connection returned null! Check Railway Variables.");
         }
-    } else {
-        out.println("Connection failed!");
+    } catch (Exception e) {
+        out.println("<h3>Connection failed!</h3>");
+        out.println("<p>Error: " + e.getMessage() + "</p>");
+        out.println("<pre>");
+        e.printStackTrace(new java.io.PrintWriter(out));
+        out.println("</pre>");
     }
 %>

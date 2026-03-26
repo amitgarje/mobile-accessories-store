@@ -8,6 +8,44 @@
         try {
             Statement stmt = conn.createStatement();
             
+            // 0. Base Tables
+            try {
+                stmt.execute("CREATE TABLE IF NOT EXISTS users (" +
+                             "id INT AUTO_INCREMENT PRIMARY KEY, " +
+                             "name VARCHAR(100) NOT NULL, " +
+                             "email VARCHAR(100) NOT NULL UNIQUE, " +
+                             "password VARCHAR(255) NOT NULL, " +
+                             "role ENUM('admin', 'customer', 'delivery') DEFAULT 'customer', " +
+                             "latitude DOUBLE DEFAULT 0.0, " +
+                             "longitude DOUBLE DEFAULT 0.0, " +
+                             "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+                msg += "Users table ready. ";
+            } catch (Exception e) { msg += "Users error: " + e.getMessage() + ". "; }
+
+            try {
+                stmt.execute("CREATE TABLE IF NOT EXISTS products (" +
+                             "id INT AUTO_INCREMENT PRIMARY KEY, " +
+                             "name VARCHAR(200) NOT NULL, " +
+                             "description TEXT, " +
+                             "price DECIMAL(10, 2) NOT NULL, " +
+                             "category VARCHAR(100), " +
+                             "image VARCHAR(255), " +
+                             "stock INT DEFAULT 0, " +
+                             "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+                msg += "Products table ready. ";
+            } catch (Exception e) { msg += "Products error: " + e.getMessage() + ". "; }
+
+            try {
+                stmt.execute("CREATE TABLE IF NOT EXISTS cart (" +
+                             "id INT AUTO_INCREMENT PRIMARY KEY, " +
+                             "user_id INT NOT NULL, " +
+                             "product_id INT NOT NULL, " +
+                             "quantity INT DEFAULT 1, " +
+                             "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE, " +
+                             "FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE)");
+                msg += "Cart table ready. ";
+            } catch (Exception e) { msg += "Cart error: " + e.getMessage() + ". "; }
+
             // 1. Core Schema Setup
             try {
                 stmt.execute("CREATE TABLE IF NOT EXISTS orders (" +
