@@ -12,66 +12,22 @@ public class DBConnection {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            String url = null;
-            String user = System.getenv("DB_USER");
-            if (user == null) user = System.getenv("MYSQLUSER");
+            String host = System.getenv("MYSQLHOST");
+            String port = System.getenv("MYSQLPORT");
+            String db = System.getenv("MYSQLDATABASE");
+            String user = System.getenv("MYSQLUSER");
+            String pass = System.getenv("MYSQLPASSWORD");
 
-            String pass = System.getenv("DB_PASS");
-            if (pass == null) pass = System.getenv("MYSQLPASSWORD");
-
-            String dbUrlEnv = System.getenv("DB_URL");
-            if (dbUrlEnv == null) dbUrlEnv = System.getenv("DATABASE_URL");
-            if (dbUrlEnv == null) dbUrlEnv = System.getenv("MYSQL_URL");
-
-            // 1. Explicit JDBC format
-            if (dbUrlEnv != null && dbUrlEnv.startsWith("jdbc:mysql://")) {
-                url = dbUrlEnv;
-            }
-            // 2. Parse Railway's mysql:// format (DATABASE_URL or MYSQL_URL)
-            else if (dbUrlEnv != null && dbUrlEnv.startsWith("mysql://")) {
-                try {
-                    String cleanUrl = dbUrlEnv.substring(8); // remove "mysql://"
-                    int atIndex = cleanUrl.lastIndexOf('@');
-                    String hostPortDb = cleanUrl;
-                    
-                    if (atIndex != -1) {
-                        String credentials = cleanUrl.substring(0, atIndex);
-                        int colonIndex = credentials.indexOf(':');
-                        if (colonIndex != -1) {
-                            if (user == null) user = credentials.substring(0, colonIndex);
-                            if (pass == null) pass = credentials.substring(colonIndex + 1);
-                        } else {
-                            if (user == null) user = credentials;
-                        }
-                        hostPortDb = cleanUrl.substring(atIndex + 1);
-                    }
-                    
-                    url = "jdbc:mysql://" + hostPortDb;
-                } catch (Exception e) {
-                    System.err.println("Failed to parse DB URL: " + e.getMessage());
-                }
-            }
-            // 3. Fallback to component variables (MYSQLHOST, etc.)
-            else if (System.getenv("MYSQLHOST") != null) {
-                String host = System.getenv("MYSQLHOST");
-                String port = System.getenv("MYSQLPORT") != null ? System.getenv("MYSQLPORT") : "3306";
-                String db = System.getenv("MYSQLDATABASE") != null ? System.getenv("MYSQLDATABASE") : "railway";
-                url = "jdbc:mysql://" + host + ":" + port + "/" + db;
-                if (user == null) user = System.getenv("MYSQLUSER");
-                if (pass == null) pass = System.getenv("MYSQLPASSWORD");
-            }
-            // 4. Local environment fallback
-            else {
-                url = "jdbc:mysql://localhost:3306/mobile_store";
-                if (user == null) user = "root";
-                if (pass == null) pass = "root";
+            // Fallback for local testing if not on Railway
+            if (host == null) {
+                host = "localhost";
+                port = "3306";
+                db = "mobile_store";
+                user = "root";
+                pass = "root";
             }
 
-            // Append standard JDBC properties
-            if (url != null && !url.contains("?")) {
-                url += "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-            }
-
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + db + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
             connection = DriverManager.getConnection(url, user, pass);
             
             // Auto-initialize tables if connection successful
