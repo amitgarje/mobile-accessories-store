@@ -21,16 +21,16 @@ public class DBConnection {
 
             String dbUrlEnv = System.getenv("DB_URL");
             if (dbUrlEnv == null) dbUrlEnv = System.getenv("DATABASE_URL");
-            String mysqlUrlEnv = System.getenv("MYSQL_URL");
+            if (dbUrlEnv == null) dbUrlEnv = System.getenv("MYSQL_URL");
 
-            // 1. Explicit DB_URL or DATABASE_URL that is already JDBC format
+            // 1. Explicit JDBC format
             if (dbUrlEnv != null && dbUrlEnv.startsWith("jdbc:mysql://")) {
                 url = dbUrlEnv;
             }
-            // 2. Parse Railway's mysql:// format (Works with special chars in password)
-            else if (mysqlUrlEnv != null && mysqlUrlEnv.startsWith("mysql://")) {
+            // 2. Parse Railway's mysql:// format (DATABASE_URL or MYSQL_URL)
+            else if (dbUrlEnv != null && dbUrlEnv.startsWith("mysql://")) {
                 try {
-                    String cleanUrl = mysqlUrlEnv.substring(8); // remove "mysql://"
+                    String cleanUrl = dbUrlEnv.substring(8); // remove "mysql://"
                     int atIndex = cleanUrl.lastIndexOf('@');
                     String hostPortDb = cleanUrl;
                     
@@ -42,22 +42,23 @@ public class DBConnection {
                             if (pass == null) pass = credentials.substring(colonIndex + 1);
                         } else {
                             if (user == null) user = credentials;
-                            if (pass == null) pass = "";
                         }
                         hostPortDb = cleanUrl.substring(atIndex + 1);
                     }
                     
                     url = "jdbc:mysql://" + hostPortDb;
                 } catch (Exception e) {
-                    System.err.println("Failed to parse MYSQL_URL: " + e.getMessage());
+                    System.err.println("Failed to parse DB URL: " + e.getMessage());
                 }
             }
-            // 3. Fallback to Railway component variables
+            // 3. Fallback to component variables (MYSQLHOST, etc.)
             else if (System.getenv("MYSQLHOST") != null) {
                 String host = System.getenv("MYSQLHOST");
                 String port = System.getenv("MYSQLPORT") != null ? System.getenv("MYSQLPORT") : "3306";
                 String db = System.getenv("MYSQLDATABASE") != null ? System.getenv("MYSQLDATABASE") : "railway";
                 url = "jdbc:mysql://" + host + ":" + port + "/" + db;
+                if (user == null) user = System.getenv("MYSQLUSER");
+                if (pass == null) pass = System.getenv("MYSQLPASSWORD");
             }
             // 4. Local environment fallback
             else {
